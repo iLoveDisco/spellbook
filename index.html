@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html>
+    
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Spellbook</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Spellbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
 </head>
 <body>
-    <h1>Spellbook</h1>
-    <h1 id="dictHeading">Dictionary Book</h1>
-    <h1>Calculus Book</h1>
+ 
+  <img src="skull.png" id="skull" alt="">
+  <img src="quill.png" id="quill" alt="">
+  <h1>Spellbook</h1>
+
+  <form>
+    <div>
+      <input
+        type="text"
+        name="spellName"
+        placeholder="Enter a spell name"
+        autofocus
+      >
+      <button type="submit">Add</button>
+    </div>
+  </form>
+
+  <main>
+    <ul id="spells"></ul>
     
-    <form name="myForm" method="post">
-        Name to Change Into:
-        <br> <input id = "submission" type="text" name="fname">
-        <button>Change text</button>
-    </form>
-    
-    
-    <script src="index.js"></script>
+  </main>
+  
+  <script src="index.js"></script>
 </body>
 </html>
