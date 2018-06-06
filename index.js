@@ -48,3 +48,11 @@ function changeColor (listItem, element) {
 }
 
 form.addEventListener('submit', addSpell);
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
