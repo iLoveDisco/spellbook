@@ -7,34 +7,32 @@
   <title>Spellbook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
 </head>
 <body>
-  <img src="skull.png" id="skull" alt="">
-  <img src="quill.png" id="quill" alt="" draggable="true" ondragstart="drag(event)">
-  <h1>Spellbook</h1>
-  <label>Drag and drop the quill to add the spell to the list. </label> <br>
+  <img src="quill.png" id="quill" alt="" draggable="true">
+  <h1>Oh, the Places you've Been!</h1>
+  <label>Drag and drop the quill onto the parchment to add the location to the list. </label> <br>
   <form>
     <div>
       <input
         type="text"
-        name="spellName"
-        placeholder="Enter a spell name"
+        name="nameOfPlace"
+        placeholder="Enter a location"
+        autofocus
+      >
+      <input
+        type="text"
+        name="descriptionOfPlace"
+        placeholder="Enter a description"
         autofocus
       >
       <button type="submit">Add</button>
     </div>
   </form>
-
-  <label>Element:</label> <br>
-  <select type="elementChoice">
-        <option>Fire</option>
-        <option>Air</option>
-        <option>Earth</option>
-        <option>Water</option>
-    </select>
-
-  <main ondrop="addSpell(event)" ondragover="allowDrop(event)">
+  
+  <main ondrop="addEntry(event)" ondragover="allowDrop(event)">
     <ul id="spells"></ul>
   </main>
   

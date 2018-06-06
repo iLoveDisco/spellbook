@@ -1,60 +1,42 @@
-const addSpellButton = document.querySelector('button');
-const form = document.querySelector('form');
-const spellList = document.querySelector('#spells');
-
-const elementSelection = document.querySelector('select');
-
-function addSpell (event) {
-    event.preventDefault();
-    if (form.spellName.value != ""){ // no empty entries allowed
-        applyAppendage(form.spellName.value, elementSelection.value);
-    }
-    form.spellName.value = "";
-}
-
-function applyAppendage (spell, element) {
-    const listItem = document.createElement('li');
-    
-    // span element
-    const spellElement = document.createElement('span');
-    spellElement.textContent = spell + ' - ';
-    spellElement.className = "spell_class";
-
-    // span element
-    const elementElement = document.createElement('span');
-    elementElement.textContent = element;
-    elementElement.className = "element_class";
-
-    listItem.appendChild(spellElement);
-    listItem.appendChild(elementElement); // listItem should look like spell - element
-
-    changeColor(listItem, element);
-    spellList.appendChild(listItem);
-}
-
-function changeColor (listItem, element) {
-    switch (element) {
-        case 'Fire':
-            listItem.style.color = 'Red';
-            break;
-        case 'Water':
-            listItem.style.color = 'Blue';
-            break;
-        case 'Earth':
-            listItem.style.color = 'Brown';
-            break;
-        case 'Air':
-            listItem.style.color = 'White';
-            break;
-    }
-}
-
-form.addEventListener('submit', addSpell);
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
 
 function allowDrop(ev) {
     ev.preventDefault();
 }
+
+const app = {
+    init: function() {
+        const form = document.querySelector('form');
+        const entryList = document.querySelector('#spells');
+        form.addEventListener('submit', ev => {
+            this.addEntry(ev)
+        })
+    },
+    addEntry: function(ev) {
+        ev.preventDefault();
+        if (this.form.nameOfPlace.value != ""){ // no empty entries allowed
+            appendToList(form.nameOfPlace, form.descriptionOfPlace);
+        }
+        form.nameOfPlace.value = "";
+        form.descriptionOfPlace = "";
+    },
+    appendToList: function(place, description) {
+        const listItem = document.createElement('li');
+    
+        const entry = {
+            nameOfPlace: place.value,
+            desc: description.value
+        }
+        const el = renderElement (entry);
+
+        listItem.appendChild(el);
+        entryList.appendChild(listItem);
+    },
+    renderElement: function(entry) {
+        const el = document.createElement('span');
+        el.textContent = `${entry['nameOfPlace']} - ${entry['desc']}`;
+        el.className = "entry";
+        return el;
+    }
+}
+
+app.init();
