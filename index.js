@@ -14,7 +14,23 @@ function addSpell (event) {
 
 function applyAppendage (spell, element) {
     const listItem = document.createElement('li');
-    listItem.textContent = spell + ' - ' + element;
+    
+    // span element
+    const spellElement = document.createElement('span');
+    spellElement.textContent = spell + ' - ';
+
+    // span element
+    const elementElement = document.createElement('span');
+    elementElement.textContent = element;
+
+    listItem.appendChild(spellElement);
+    listItem.appendChild(elementElement); // listItem should look like spell - element
+
+    changeColor(listItem, element);
+    spellList.appendChild(listItem);
+}
+
+function changeColor (listItem, element) {
     switch (element) {
         case 'Fire':
             listItem.style.color = 'Red';
@@ -29,7 +45,6 @@ function applyAppendage (spell, element) {
             listItem.style.color = 'White';
             break;
     }
-    spellList.appendChild(listItem);
 }
 
 form.addEventListener('submit', addSpell);
