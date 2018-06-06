@@ -19,7 +19,7 @@
       <input
         type="text"
         name="spellName"
-        placeholder="Enter a spell name"
+        placeholder="Enter a spell name. Drag and drop the quill to add the spell to the list."
         autofocus
       >
       <button type="submit">Add</button>
@@ -34,8 +34,8 @@
         <option>Water</option>
     </select>
 
-  <main>
-    <ul id="spells" ondrop="addSpell(event)" ondragover="allowDrop(event)"></ul>
+  <main ondrop="addSpell(event)" ondragover="allowDrop(event)">
+    <ul id="spells"></ul>
   </main>
   
   <script src="index.js"></script>

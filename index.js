@@ -6,7 +6,7 @@ const elementSelection = document.querySelector('select');
 
 function addSpell (event) {
     event.preventDefault();
-    if (form.spellName.value != ""){// no empty entries allowed
+    if (form.spellName.value != ""){ // no empty entries allowed
         applyAppendage(form.spellName.value, elementSelection.value);
     }
     form.spellName.value = "";
@@ -18,10 +18,12 @@ function applyAppendage (spell, element) {
     // span element
     const spellElement = document.createElement('span');
     spellElement.textContent = spell + ' - ';
+    spellElement.className = "spell_class";
 
     // span element
     const elementElement = document.createElement('span');
     elementElement.textContent = element;
+    elementElement.className = "element_class";
 
     listItem.appendChild(spellElement);
     listItem.appendChild(elementElement); // listItem should look like spell - element
