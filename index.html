@@ -11,9 +11,11 @@
   <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
 </head>
 <body>
-  <img src="quill.png" id="quill" alt="" draggable="true">
   <h1>Oh, the Places you've Been!</h1>
-  <label>Drag and drop the quill onto the parchment to add the location to the list. </label> <br>
+  <img src="quill.png" id="quill" alt="" draggable="true">
+  <img src="passport.png" id= "passport_id" alt="" draggable="false">
+  
+  <label>Drag and drop the quill onto the parchment</label> <br><br>
   <form>
     <div>
       <input
@@ -31,8 +33,8 @@
       <button type="submit">Add</button>
     </div>
   </form>
-  
-  <main ondrop="addEntry(event)" ondragover="allowDrop(event)">
+
+  <main ondrop="app.addEntry(event)" ondragover="allowDrop(event)">
     <ul id="spells"></ul>
   </main>
   

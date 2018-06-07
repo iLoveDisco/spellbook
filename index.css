@@ -10,22 +10,23 @@ body {
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-img#skull {
+img#passport_id {
   position: absolute;
   right: 5vw;
-  top: 5vw;
+  top: 11vw;
   transform: rotate(15deg);
   width: 25vw;
 }
 
 img#quill {
   position: absolute;
-  top: calc(30vw + 40px);
-  right: 3vw;
+  top: calc(33vw + 40px);
+  right: 8vw;
   width: 20vw;
 }
 
 h1 {
+  top: 0px;
   font-family: 'Merriweather Sans', sans-serif;
   margin-left: 10vw;
   margin-top: 5vw;
@@ -141,6 +142,28 @@ button[type="submit"] {
   cursor: pointer;
 }
 
+button[type="remove"] {
+  background-color: #F8DE32;
+  color: #0a0a0a;
+  height: auto;
+  align-self: stretch;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: inherit;
+  padding: 0 .1em;
+  border: 1px solid transparent;
+  transition: background-color .25s ease-out,color .25s ease-out;
+  font-size: .9rem;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
 button[type="submit"]:hover {
   background-color: #dca936;
 }
@@ -150,7 +173,7 @@ main {
   background-image: url(parchment.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
-  width: 50vw;
+  width: 60vw;
   margin-left: 10vw;
   height: calc(100vh - 18.5vw - 4rem);
   overflow-y: scroll;
