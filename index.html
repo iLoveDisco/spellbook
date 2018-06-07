@@ -35,7 +35,13 @@
   </form>
 
   <main ondrop="app.addEntry(event)" ondragover="allowDrop(event)">
-    <ul id="spells"></ul>
+    <ul id="locations">
+      <li class="location template">
+        <span class="name"></span>
+        <span class="desc"></span>
+        <button class="delete">del</button>
+      </li>
+    </ul>
   </main>
   
   <script src="index.js"></script>
