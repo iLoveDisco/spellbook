@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 </head>
 <body>
   <h1>Oh, the Places you've Been!</h1>
@@ -23,7 +24,7 @@
         name="nameOfPlace"
         placeholder="Enter a location"
         autofocus
-      >
+      > <br> <br>
       <input
         type="text"
         name="descriptionOfPlace"
@@ -36,10 +37,21 @@
 
   <main ondrop="app.addEntry(event)" ondragover="allowDrop(event)">
     <ul id="locations">
-      <li class="location template">
-        <span class="name"></span>
-        <span class="desc"></span>
-        <button class="delete">del</button>
+      <li hidden = 'true' class="location template">
+          <button class="delete">
+              <i class="far fa-trash-alt" title="remove"></i>
+            </button>
+          <button class="move up">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+          <button class="move down">
+            <i class="fas fa-arrow-down"></i>
+          </button>
+          <button class="fav">
+            <i class="fas fa-star" title="favorite"></i>
+          </button>
+          <span class="name"></span>
+          <p class="desc"></p>
       </li>
     </ul>
   </main>

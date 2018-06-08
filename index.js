@@ -2,80 +2,166 @@
 function allowDrop(ev) {
     ev.preventDefault();
 }
-var entryList = document.querySelector('#spells');
-const app = {
-    init: function() {
-        this.entriesDatabase = [];
-        this.template = document.querySelector('.location.template')
-        
-        const form = document.querySelector('form');
-        form.addEventListener('submit', ev => {
-            ev.preventDefault();
-            this.handleSubmit(ev);
-        })
-    },
-    handleSubmit: function(ev) {
-        const form = ev.target; // the form
-        if (form.nameOfPlace.value != ""){ // no empty entries allowed
-            this.appendToList(form.nameOfPlace, form.descriptionOfPlace);
-        }
-        form.nameOfPlace.value = "";
-        form.descriptionOfPlace.value = "";
-        form.nameOfPlace.focus();
-    },
-    appendToList: function(place, description) {
-        const listItem = document.createElement('li');
-    
+class App {
+    constructor() {
+      this.entries = []
+      this.template = document.querySelector('.location.template')
+      this.list = document.querySelector('#locations')
+  
+      this.load()
+  
+      const form = document.querySelector('form')
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault()
+        this.handleSubmit(ev)
+      })
+    }
+
+    handleSubmit(ev) {
+        const form = ev.target
         const entry = {
-            nameOfPlace: place.value,
-            desc: description.value
+          name: form.nameOfPlace.value,
+          desc: form.descriptionOfPlace.value,
+          favorite: false,
         }
-        this.entriesDatabase.push(entry); // pushes onto database
+    
+        this.addEntry(entry)
+        this.save()
+    
+        form.reset()
+        form.nameOfPlace.focus()
+      }
 
-        const el = this.renderItem (entry);
+    addEntry(entry) {
+        this.entries.push(entry);
+        const item = this.renderItem(entry);
+        item.hidden = false;
+        this.list.appendChild(item);
 
-
-        const delButton = document.createElement('button');
-        delButton.textContent = "Remove";
-        listItem.appendChild(delButton);
-        delButton.type = "remove";
-
-        delButton.addEventListener('click', this.removeSpell.bind(this, entry));
-
-        listItem.appendChild(el);
-        entryList.appendChild(listItem);
-    },
-
-    removeEntry: function(entry, ev) {
-        entryList.removeChild(listItem);
-        
-        let i = entriesDatabase.indexOf(entry);
-        this.entriesDatabase.splice(i,1);
-    },
-
-    renderItem: function(entry) {
-        const item = this.template.cloneNode(true);
-        item.classList.remove('template') // helps hide the initial template
-
-        // ['name', 'desc']
+    }
+    
+    renderItem(entry) {
+        const item = this.template.cloneNode(true)
+        item.classList.remove('template');
+    
+        // ['name', 'desc', 'favorite']
         const properties = Object.keys(entry);
-        properites.forEach(property => {
-            const el = item.querySelector(`.${property}`);
+    
+        properties.forEach(property => {
+          const el = item.querySelector(`.${property}`) // get the class name of each property in "properties"
+          if (el) { // if el != null
             el.textContent = entry[property];
-            el.setAttribute('title', spell[property]);
+            el.setAttribute('title', entry[property]);
+          }
         })
-
+    
+        // Mark it as a favorite, if applicable
+        if (entry.favorite) {
+          item.classList.add('fav')
+        }
+    
         // delete button
         item
             .querySelector('button.delete')
-            .addEventListener('click', this.removeEntry.bind(this,spell));
-
-        // const el = document.createElement('span');
-        // const text = document.createElement('span');
-        // text.textContent = `   ${entry['nameOfPlace']} - ${entry['desc']}`;
-        // el.appendChild(text);
-        // return el;
+            .addEventListener('click', this.removeEntry.bind(this, entry));
+    
+        // fav button
+        item
+          .querySelector('button.fav')
+          .addEventListener('click', this.toggleFavorite.bind(this, entry));
+    
+        // move up
+        item
+          .querySelector('button.up')
+          .addEventListener('click', this.moveUp.bind(this, entry));
+    
+        // move down
+        item
+          .querySelector('button.down')
+          .addEventListener('click', this.moveDown.bind(this, entry));
+    
+        return item;
     }
-}
 
-app.init();
+    load() {
+      // Read JSON from localStorage
+      const entryJSON = localStorage.getItem('entries')
+  
+      // Convert JSON back into an array
+      const placeArray = JSON.parse(entryJSON)
+  
+      // Load the spells back into the app
+      if (placeArray) {
+        placeArray.forEach(this.addEntry.bind(this))
+      }
+    }
+  
+    save() {
+      localStorage.setItem('entries', JSON.stringify(this.entries));
+    }
+  
+    moveDown(entry, ev) {
+      // Find the <li>
+      const button = ev.target
+      const item = button.closest('.location') // the closest with a class of location
+  
+      // Find its index
+      const i = this.entries.indexOf(entry)
+  
+      // Move only if it's not the last.
+      if (i < this.entries.length - 1) {
+        // Move it on the page
+        this.list.insertBefore(item.nextSibling, item)
+  
+        // Move it in the array. Do the variable swaps.
+        const nextEntry = this.entries[i + 1];
+        this.entries[i + 1] = entry;
+        this.entries[i] = nextEntry;
+  
+        this.save()
+      }
+    }
+  
+    moveUp(entry, ev) {
+      // Find the <li>
+      const button = ev.target
+      const item = button.closest('.location') // the closest with a class of location
+  
+      // Find its index
+      const i = this.entries.indexOf(entry)
+  
+      // Move only if it's not the first.
+      if (i > 0) {
+        this.list.insertBefore(item, item.previousSibling)
+  
+        // Move it in the array
+        const previousEntry = this.entries[i - 1]
+        this.entries[i - 1] = entry
+        this.entries[i] = previousEntry
+  
+        this.save()
+      }
+    }
+  
+    toggleFavorite(entry, ev) {
+      const button = ev.target
+      const item = button.closest('.location')
+      entry.favorite = item.classList.toggle('fav')
+      this.save()
+    }
+  
+    removeEntry(entry, ev) {
+      // Remove from the DOM
+      const button = ev.target
+      const item = button.closest('.location')
+      item.parentNode.removeChild(item)
+  
+      // Remove from the array
+      const i = this.entries.indexOf(entry)
+      this.entries.splice(i, 1)
+  
+      this.save()
+    }
+  }
+  
+  const app = new App()
