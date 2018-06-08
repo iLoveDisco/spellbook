@@ -2,6 +2,17 @@
 function allowDrop(ev) {
     ev.preventDefault();
 }
+
+function myMap() {
+  var mapOptions = {
+      center: new google.maps.LatLng(51.5, -0.12),
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.HYBRID
+  }
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+
+
 class App {
     constructor() {
       this.entries = []
@@ -13,12 +24,14 @@ class App {
       const form = document.querySelector('form')
       form.addEventListener('submit', (ev) => {
         ev.preventDefault()
-        this.handleSubmit(ev)
+        if(form.nameOfPlace.value != "" && form.descriptionOfPlace.value != "") {
+          this.handleSubmit(ev); // doesn't accept empty entries
+        }
       })
     }
 
     handleSubmit(ev) {
-        const form = ev.target
+        const form = document.querySelector('form');
         const entry = {
           name: form.nameOfPlace.value,
           desc: form.descriptionOfPlace.value,
@@ -37,7 +50,6 @@ class App {
         const item = this.renderItem(entry);
         item.hidden = false;
         this.list.appendChild(item);
-
     }
     
     renderItem(entry) {
@@ -147,6 +159,11 @@ class App {
       const button = ev.target
       const item = button.closest('.location')
       entry.favorite = item.classList.toggle('fav')
+      if (entry.favorite) {
+        button.style.color = 'gold';
+      } else {
+        button.style.color = 'black';
+      }
       this.save()
     }
   
@@ -165,3 +182,5 @@ class App {
   }
   
   const app = new App()
+
+  
